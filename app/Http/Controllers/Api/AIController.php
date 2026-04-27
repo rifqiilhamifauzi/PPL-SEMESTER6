@@ -22,7 +22,8 @@ class AIController extends Controller
         $fullPrompt = $systemPrompt . "\n\nPertanyaan User: " . $request->question;
 
         try {
-            $result = Gemini::geminiPro()->generateContent($fullPrompt);
+            $model = env('GEMINI_MODEL', 'gemini-2.5-flash');
+            $result = Gemini::generativeModel($model)->generateContent($fullPrompt);
 
             return response()->json([
                 'success' => true,
